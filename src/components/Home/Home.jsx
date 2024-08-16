@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../../Provider/AuthProvider';
+import React, {  } from 'react';
+
 
 const Home = () => {
-    const {name} = useContext(AuthContext);
+    
 
     return (
         <div>
-            <h2 className='text-2xl'>{name}</h2>
+            <h2 className='text-2xl'>home Section is totally unfairable</h2>
         </div>
     );
 };
