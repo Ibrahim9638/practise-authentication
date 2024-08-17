@@ -2,10 +2,10 @@ import { useContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from '../../Provider/AuthProvider';
+import { sendEmailVerification, updateProfile } from 'firebase/auth';
 
 const Register = () => {
     const {CreateUser} = useContext(AuthContext);
-
     const [userSuccess, setUserSuccess] = useState('');
     const [userError, setUserError] = useState('');
 
@@ -30,6 +30,22 @@ const Register = () => {
             console.log(result.user);
             setUserSuccess(' ');
             toast('User Created Successfully', userSuccess);
+            // update profile
+            updateProfile(result.user, {
+                displayName: name,
+                photoURL: "https://example.com/jane-q-user/profile.jpg"
+            })
+            .then(()=>{
+                console.log('Update Profile Successfully')
+            })
+            .catch(error=>{
+                console.log(error.message);
+            })
+            // send Email Verification
+            sendEmailVerification(result.user)
+            .then(()=>{
+                console.log('Please Verify Your email')
+            })
             e.target.reset();
         })
         .catch(error=>{
@@ -54,7 +70,7 @@ const Register = () => {
                                 placeholder="Enter Your Name"
                                 name='name'
                                 className="input input-bordered"
-                                required />
+                                />
                         </div>
                         <div className="form-control">
                             <label className="label">
